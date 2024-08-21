@@ -1,0 +1,20 @@
+The "Spotify_Messy_210535530.txt" original data, represented as a data frame in R, contained 25 variables and 1728 observations, providing details about various music tracks and their attributes.
+
+Initially, the dataset comprised variables such as track_id, track_name, track_artist, track_popularity, track_album_id, track_album_name, track_album_release_date, playlist_name, playlist_id, and several audio features including danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, duration_ms, pop, rap, rock, r.b, and edm.
+
+By observing the table, i was able to identify several ways in which the rules of tidy data were violated. 
+•	Firstly, I noticed columns labeled "pop," "rap," "rock," "r.b," and "edm," which violated the tidy data principle of "each variable forms a column" To remedy this, I introduced two new columns: "genre" to bring together these categories and "subgenre" by combining the content of the initial five columns. This restructuring maintained all data while adhering to tidy data principles.
+•	Secondly, I observed that the column danceability.energy, where basically two variables in 1, breaking two principles; “Each variable forms a column” and “Each type of observational unit forms a data table”. To fix this, I simply needed to separate the values, splitting the column in 2, creating a variable “danceability” with its values, and “energy” with its representative values.
+
+Furthermore, by meticulously examining each variable, cross-referencing with dictionary descriptions, and assessed data integrity by scrutinizing values and characters. I found several errors, and these are the following changes I have done the data:
+
+•	Inconsistent Column Naming: Column names were inconsistent, with mixed capitalization and the inclusion of unnecessary characters. "TTrack_nameff5" was renamed to "track_name" to adhere to standardized naming conventions.
+•	Misspelled Artist Names: I knew that some artist names contained spelling errors. I utilized the grep function to identify misspelt names like "Bad Sunny" and corrected them to the accurate "Bad Bunny."
+•	$track_album_release_date: discovered a recurring issue where the year "75" seemed to be a mistake and needed correction to "2019.". To fix it, I utilised gsub function to replace instances of "75" with "2019".
+•	$loudness: In addressing the loudness column, a single value exceeding 0 (0.326), the dictionary made clear numbers should not be higher than 0. Therefore, I assumed it was a mistake, and replaced it with its negative counterpart (-0.326) using the gsub function. 
+•	$instrumentalness: had several problematic maximum values surpassing the valid range of 0 to 1. I systematically identified and replaced values exceeding 1 with NA to rectify this issue.
+•	$mode: when checking the variable “mode” I found the character "T", the dictionary made clear it should all be numerical values.  To rectify this, the script utilized gsub to remove the "T," .
+•	Class: several variables were not assigned the right class, so I changed several variables from character class to numerical, and the track_album_release_date i changed to date class. 
+•	ID: I recognised several issues with the existing IDs in the dataset, I observed instances where the same playlist possessed different playlist IDs and where identical IDs were assigned to distinct playlists. Furthermore, some playlists lacked IDs, which could be critical for comparative analysis. Acknowledging the lack of uniqueness and consistency in the current IDs, I opted to delete the problematic track_id and track_album_id columns to eliminate confusion. Subsequently, I devised a solution to generate new, unique playlist IDs for each playlist, replacing the original inconsistent IDs. This decision aimed to enhance data clarity and facilitate meaningful comparisons between playlists, addressing the identified issues in a systematic manner.
+
+
